@@ -1,0 +1,24 @@
+{
+    "name": "cristian-quiroz/probuild",
+    "description": "Simple tool for managing projects.",
+    "license": "MIT",
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/console": "2.6.*",
+        "symfony/yaml": "2.6.*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.1.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Probuild": "src"
+        }
+    },
+    "authors": [
+        {
+            "name": "Cristian Quiroz",
+            "email": "cris@qcas.co"
+        }
+    ]
+}
