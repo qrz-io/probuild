@@ -30,6 +30,10 @@ $makeCommand
     ->setComposerManager($composerManager)
     ->setGruntManager($gruntManager);
 
+//Create Update Command
+$updateCommand = new Command\UpdateCommand();
+
 $application->add($makeCommand);
+$application->add($updateCommand);
 
 return $application;
