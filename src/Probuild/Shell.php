@@ -8,22 +8,40 @@ class Shell
 {
 
     /** @var bool */
-    protected $isDryRun = false;
+    protected $testMode = false;
+    /** @var OutputInterface */
+    protected $output;
 
     /**
      * @param $command
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @return Shell
      * @author Cristian Quiroz <cris@qcas.co>
      */
-    public function exec($command, OutputInterface $output)
+    public function exec($command)
     {
-        $output->writeln("<info>{$command}</info>");
+        $commandOutput = "<info>{$command}</info>\n";
 
-        if (!$this->isDryRun) {
-            $result = shell_exec($command);
-            $output->writeln($result);
+        if ($this->testMode) {
+            $commandOutput = '<comment>(test mode) </comment>' . $commandOutput;
+        } else {
+            $commandOutput .= shell_exec($command);
         }
+
+        if ($this->output instanceof OutputInterface) {
+            $this->output->writeln($commandOutput);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param OutputInterface $output
+     * @return Shell
+     * @author Cristian Quiroz <cris@qcas.co>
+     */
+    public function setOutput(OutputInterface $output)
+    {
+        $this->output = $output;
 
         return $this;
     }
@@ -32,9 +50,9 @@ class Shell
      * @return Shell
      * @author Cristian Quiroz <cris@qcas.co>
      */
-    public function enableDryRun()
+    public function enableTestMode()
     {
-        $this->isDryRun = true;
+        $this->testMode = true;
 
         return $this;
     }
