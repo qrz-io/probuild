@@ -1,0 +1,16 @@
+target-ddir: "/path/to/build"
+clean: true                     #Removes current content from the target directory
+clean-exceptions:               #Files or directories that should be kept during cleaning
+  - "/path/to/build/file"
+  - "/path/to/build/directory/"
+
+dir-paths:                      #List of directories to symlink into target directory
+  - "/path/to/dir1"
+  - "/path/to/dir2"
+
+composer: true                  #Should composer be run
+post-composer-dir-paths:        #List of directories to symlink into target directory after running composer
+  - "/post/composer/path1"
+  - "/post/composer/path2"
+
+grunt: true                     #Should grunt be run
