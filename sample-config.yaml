@@ -1,4 +1,4 @@
-target-ddir: "/path/to/build"
+target-dir: "/path/to/build"
 clean: true                     #Removes current content from the target directory
 clean-exceptions:               #Files or directories that should be kept during cleaning
   - "/path/to/build/file"
