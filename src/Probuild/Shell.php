@@ -17,10 +17,10 @@ class Shell
      */
     public function exec($command)
     {
-        $commandOutput = "<info>{$command}</info>\n";
+        $commandOutput = "<info>{$command}</info>";
 
         if ($this->testMode) {
-            $commandOutput = '<comment>(test mode) </comment>' . $commandOutput;
+            $commandOutput = '<comment>#(test mode) </comment>' . $commandOutput;
         } else {
             $commandOutput .= shell_exec($command);
         }
