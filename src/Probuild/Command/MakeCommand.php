@@ -97,6 +97,10 @@ class MakeCommand extends Command
             $output->writeln("\n<comment>## Running grunt on target directory ##</comment>");
             $this->getGruntManager()->run($config->getTargetDirectory());
         }
+
+        //Clean up target directory
+        $output->writeln("\n<comment>## Cleaning up target directory ##</comment>");
+        $this->getDirectoryManager()->cleanup($config->getTargetDirectory());
     }
 
     /**

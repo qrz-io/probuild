@@ -84,9 +84,29 @@ class Directory extends AbstractManager
     public function restore($targetDirectory, $backupDirectory)
     {
         $this->write(
-            $this->getShell()->exec("cp -r {$backupDirectory}* {$targetDirectory}")
+            $this->getShell()->exec("cp -r {$backupDirectory}. {$targetDirectory}")
         );
 
         return $this;
+    }
+
+    /**
+     * @param $targetDirectory
+     * @return Directory
+     * @author Cristian Quiroz <cris@qcas.co>
+     */
+    public function cleanup($targetDirectory)
+    {
+        $this->write(
+            $this->getShell()->exec("chmod -R 777 {$targetDirectory}")
+        );
+
+        $this->write(
+            $this->getShell()->exec("rm -rf `find {$targetDirectory} -type d -name .svn`")
+        );
+
+        $this->write(
+            $this->getShell()->exec("rm -rf `find {$targetDirectory} -type d -name .git`")
+        );
     }
 }

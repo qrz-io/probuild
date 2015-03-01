@@ -18,7 +18,7 @@ class Link extends AbstractManager
         foreach ($paths as $path) {
             $path = $this->prepareDirectoryPath($path);
             $this->write(
-                $this->getShell()->exec("cp -alf {$path}* $target")
+                $this->getShell()->exec("cp -alf {$path}. $target")
             );
         }
 
