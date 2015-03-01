@@ -60,6 +60,7 @@ class MakeCommand extends Command
         //Prepare target Directory
         $backupLocation = null;
         if ($config->shouldCleanTargetDirectory()) {
+            $output->writeln("\n<comment>## Cleaning target directory ##</comment>");
             $backupLocation = $this->getDirectoryManager()->backup(
                 $config->getTargetDirectory(), $config->getCleanExceptions()
             );
@@ -67,23 +68,33 @@ class MakeCommand extends Command
         }
 
         //Create main links
+        $output->writeln("\n<comment>## Creating links to target directory ##</comment>");
         $this->getLinkManager()->createLinks($config->getDirectoryPaths(), $config->getTargetDirectory());
 
         //Restore exceptions, if any
         if ($backupLocation !== null) {
+            $output->writeln("\n<comment>## Restoring backups to target directory ##</comment>");
             $this->getDirectoryManager()->restore($config->getTargetDirectory(), $backupLocation);
         }
 
         //Run composer
         if ($config->shouldRunComposer()) {
+            $output->writeln("\n<comment>## Running composer on target directory ##</comment>");
             $this->getComposerManager()->run($config->getTargetDirectory());
         }
 
         //Create post composer links
-        $this->getLinkManager()->createLinks($config->getPostComposerDirectoryPaths(), $config->getTargetDirectory());
+        if (count($config->getPostComposerDirectoryPaths()) > 0) {
+            $output->writeln("\n<comment>## Creating post composer links to target directory ##</comment>");
+            $this->getLinkManager()->createLinks(
+                $config->getPostComposerDirectoryPaths(),
+                $config->getTargetDirectory()
+            );
+        }
 
         //Run Grunt
         if ($config->shouldRunGrunt()) {
+            $output->writeln("\n<comment>## Running grunt on target directory ##</comment>");
             $this->getGruntManager()->run($config->getTargetDirectory());
         }
     }
