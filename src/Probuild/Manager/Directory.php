@@ -33,7 +33,7 @@ class Directory extends AbstractManager
                     $this->getShell()->exec("mkdir -p -m 0777 {$dirTempPath}")
                 );
                 $this->write(
-                    $this->getShell()->exec("mv {$fullOrigPath} {$dirTempPath}")
+                    $this->getShell()->exec("cp -r {$fullOrigPath} {$dirTempPath}")
                 );
             } else {
                 $this->write(
@@ -62,11 +62,15 @@ class Directory extends AbstractManager
 
         // remove target directory if it exists
         if (file_exists($target)) {
-            $this->getShell()->exec("rm -rf {$target}");
+            $this->write(
+                $this->getShell()->exec("rm -rf {$target}")
+            );
         }
 
         // create target directory
-        $this->getShell()->exec("mkdir -p -m 0777 {$target}");
+        $this->write(
+            $this->getShell()->exec("mkdir -p -m 0777 {$target}")
+        );
 
         return $this;
     }
@@ -79,12 +83,8 @@ class Directory extends AbstractManager
      */
     public function restore($targetDirectory, $backupDirectory)
     {
-        if (is_dir($backupDirectory)) {
-            $this->getShell()->exec("mv {$backupDirectory}* {$targetDirectory}");
-        }
-
         $this->write(
-            sprintf('<error>\'%s\' is not a valid backup directory. Ignoring.</error>', $backupDirectory)
+            $this->getShell()->exec("cp -r {$backupDirectory}* {$targetDirectory}")
         );
 
         return $this;
