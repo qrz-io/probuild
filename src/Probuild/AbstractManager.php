@@ -20,6 +20,20 @@ class AbstractManager
     public function write($text)
     {
         $this->output->writeln($text);
+
+        return $this;
+    }
+
+    /**
+     * @param string $path
+     * @return string
+     * @author Cristian Quiroz <cris@qcas.co>
+     */
+    protected function prepareDirectoryPath($path)
+    {
+        $path = rtrim($path, '/') . '/';
+
+        return $path;
     }
 
     /**

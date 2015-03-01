@@ -5,7 +5,6 @@ use Probuild\Command;
 use Probuild\Manager;
 use Symfony\Component\Console\Application;
 
-
 $application = new Application('Probuild', '@package_version@');
 
 //Create Shell

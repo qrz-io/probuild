@@ -89,16 +89,4 @@ class Directory extends AbstractManager
 
         return $this;
     }
-
-    /**
-     * @param string $path
-     * @return string
-     * @author Cristian Quiroz <cris@qcas.co>
-     */
-    protected function prepareDirectoryPath($path)
-    {
-        $path = rtrim($path, '/') . '/';
-
-        return $path;
-    }
 }
