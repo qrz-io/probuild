@@ -47,14 +47,22 @@ class MakeCommand extends Command
         $config = new Config($input->getArgument('config'));
 
         //Prepare shell
-        $this->getShell()->setOutput($output);
         if ($input->getOption('test')) {
             $this->getShell()->enableTestMode();
         }
 
+        //Prepare Managers
+        $this->getDirectoryManager()->setOutput($output);
+        $this->getLinkManager()->setOutput($output);
+        $this->getComposerManager()->setOutput($output);
+        $this->getGruntManager()->setOutput($output);
+
         //Prepare target Directory
+        $backupLocation = null;
         if ($config->shouldCleanTargetDirectory()) {
-            $this->getDirectoryManager()->backup($config->getCleanExceptions());
+            $backupLocation = $this->getDirectoryManager()->backup(
+                $config->getTargetDirectory(), $config->getCleanExceptions()
+            );
             $this->getDirectoryManager()->clean($config->getTargetDirectory());
         }
 
@@ -62,8 +70,8 @@ class MakeCommand extends Command
         $this->getLinkManager()->createLinks($config->getDirectoryPaths(), $config->getTargetDirectory());
 
         //Restore exceptions, if any
-        if ($config->shouldCleanTargetDirectory()) {
-            $this->getDirectoryManager()->restore($config->getCleanExceptions());
+        if ($backupLocation !== null) {
+            $this->getDirectoryManager()->restore($config->getTargetDirectory(), $backupLocation);
         }
 
         //Run composer

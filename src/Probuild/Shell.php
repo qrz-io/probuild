@@ -9,8 +9,6 @@ class Shell
 
     /** @var bool */
     protected $testMode = false;
-    /** @var OutputInterface */
-    protected $output;
 
     /**
      * @param $command
@@ -27,23 +25,7 @@ class Shell
             $commandOutput .= shell_exec($command);
         }
 
-        if ($this->output instanceof OutputInterface) {
-            $this->output->writeln($commandOutput);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param OutputInterface $output
-     * @return Shell
-     * @author Cristian Quiroz <cris@qcas.co>
-     */
-    public function setOutput(OutputInterface $output)
-    {
-        $this->output = $output;
-
-        return $this;
+       return $commandOutput;
     }
 
     /**

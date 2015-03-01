@@ -1,8 +1,8 @@
 target-dir: "/path/to/build"
 clean: true                     #Removes current content from the target directory
-clean-exceptions:               #Files or directories that should be kept during cleaning
-  - "/path/to/build/file"
-  - "/path/to/build/directory/"
+clean-exceptions:               #Files or directories that should be kept during cleaning (local to target-dir)
+  - "path/to/file"
+  - "path/to/directory/"
 
 dir-paths:                      #List of directories to symlink into target directory
   - "/path/to/dir1"
