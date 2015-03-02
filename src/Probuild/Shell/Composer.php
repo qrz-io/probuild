@@ -18,9 +18,8 @@ class Composer extends Shell
             $this->write('<error>\'composer\' is not installed.</error>');
             return $this;
         }
-        $this->write(
-            $this->exec("composer update -d {$targetDir}")
-        );
+
+        $this->exec("composer update -d {$targetDir}");
 
         return $this;
     }

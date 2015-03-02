@@ -29,12 +29,8 @@ class Directory extends Shell
 
             if (file_exists($fullOrigPath)) {
                 $dirTempPath = pathinfo($fullTempPath, PATHINFO_DIRNAME);
-                $this->write(
-                    $this->exec("mkdir -p -m 0777 {$dirTempPath}")
-                );
-                $this->write(
-                    $this->exec("cp -r {$fullOrigPath} {$dirTempPath}")
-                );
+                $this->exec("mkdir -p -m 0777 {$dirTempPath}");
+                $this->exec("cp -r {$fullOrigPath} {$dirTempPath}");
             } else {
                 $this->write(
                     sprintf('<error>\'%s\' is not a valid file. Ignoring.</error>', $fullOrigPath)
@@ -62,15 +58,11 @@ class Directory extends Shell
 
         // remove target directory if it exists
         if (file_exists($target)) {
-            $this->write(
-                $this->exec("rm -rf {$target}")
-            );
+            $this->exec("rm -rf {$target}");
         }
 
         // create target directory
-        $this->write(
-            $this->exec("mkdir -p -m 0777 {$target}")
-        );
+        $this->exec("mkdir -p -m 0777 {$target}");
 
         return $this;
     }
@@ -83,9 +75,7 @@ class Directory extends Shell
      */
     public function restore($targetDirectory, $backupDirectory)
     {
-        $this->write(
-            $this->exec("cp -r {$backupDirectory}. {$targetDirectory}")
-        );
+        $this->exec("cp -r {$backupDirectory}. {$targetDirectory}");
 
         return $this;
     }
@@ -97,16 +87,8 @@ class Directory extends Shell
      */
     public function cleanup($targetDirectory)
     {
-        $this->write(
-            $this->exec("chmod -R 777 {$targetDirectory}")
-        );
-
-        $this->write(
-            $this->exec("rm -rf `find {$targetDirectory} -type d -name .svn`")
-        );
-
-        $this->write(
-            $this->exec("rm -rf `find {$targetDirectory} -type d -name .git`")
-        );
+        $this->exec("chmod -R 777 {$targetDirectory}");
+        $this->exec("rm -rf `find {$targetDirectory} -type d -name .svn`");
+        $this->exec("rm -rf `find {$targetDirectory} -type d -name .git`");
     }
 }

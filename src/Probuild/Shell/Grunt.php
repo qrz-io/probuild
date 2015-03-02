@@ -32,12 +32,8 @@ class Grunt extends Shell
             return $this;
         }
 
-        $this->write(
-            $this->exec("npm install --prefix {$targetDir} {$targetDir}")
-        );
-        $this->write(
-            $this->exec("grunt --gruntfile {$targetDir}/Gruntfile.js devbuild-force")
-        );
+        $this->exec("npm install --prefix {$targetDir} {$targetDir}");
+        $this->exec("grunt --gruntfile {$targetDir}/Gruntfile.js devbuild-force");
 
         return $this;
     }

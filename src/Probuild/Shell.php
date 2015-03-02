@@ -19,15 +19,19 @@ class Shell
      */
     public function exec($command)
     {
-        $commandOutput = "<info>{$command}</info>";
+        $commandOutput = "<info> ~$ > {$command}</info>";
 
         if ($this->testMode) {
             $commandOutput = '<comment>#(test mode) </comment>' . $commandOutput;
-        } else {
-            $commandOutput .= shell_exec($command);
         }
 
-       return $commandOutput;
+        $this->write($commandOutput);
+
+        if (!$this->testMode) {
+            passthru($command);
+        }
+
+        return $this;
     }
 
     /**
