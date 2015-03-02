@@ -14,13 +14,13 @@ class MakeCommand extends Command
 {
 
     /** @var  Shell\Directory */
-    protected $directoryManager;
+    protected $directoryShell;
     /** @var Shell\Link */
-    protected $linkManager;
+    protected $linkShell;
     /** @var Shell\Composer */
-    protected $composerManager;
+    protected $composerShell;
     /** @var Shell\Grunt */
-    protected $gruntManager;
+    protected $gruntShell;
 
     /**
      * @author Cristian Quiroz <cris@qcas.co>
@@ -47,48 +47,42 @@ class MakeCommand extends Command
 
         //Prepare shell
         if ($input->getOption('test')) {
-            $this->getDirectoryManager()->enableTestMode();
-            $this->getLinkManager()->enableTestMode();
-            $this->getComposerManager()->enableTestMode();
-            $this->getGruntManager()->enableTestMode();
+            $this->enableTestMode();
         }
 
-        //Prepare Managers
-        $this->getDirectoryManager()->setOutput($output);
-        $this->getLinkManager()->setOutput($output);
-        $this->getComposerManager()->setOutput($output);
-        $this->getGruntManager()->setOutput($output);
+        //Prepare Shells
+        $this->setShellOutput($output);
 
         //Prepare target Directory
         $backupLocation = null;
         if ($config->shouldCleanTargetDirectory()) {
             $output->writeln("\n<comment>## Cleaning target directory ##</comment>");
-            $backupLocation = $this->getDirectoryManager()->backup(
+            $backupLocation = $this->getDirectoryShell()->backup(
                 $config->getTargetDirectory(), $config->getCleanExceptions()
             );
-            $this->getDirectoryManager()->clean($config->getTargetDirectory());
+            $this->getDirectoryShell()->clean($config->getTargetDirectory());
         }
 
         //Create main links
         $output->writeln("\n<comment>## Creating links to target directory ##</comment>");
-        $this->getLinkManager()->createLinks($config->getDirectoryPaths(), $config->getTargetDirectory());
+        $this->getLinkShell()->createLinks($config->getDirectoryPaths(), $config->getTargetDirectory());
 
         //Restore exceptions, if any
         if ($backupLocation !== null) {
             $output->writeln("\n<comment>## Restoring backups to target directory ##</comment>");
-            $this->getDirectoryManager()->restore($config->getTargetDirectory(), $backupLocation);
+            $this->getDirectoryShell()->restore($config->getTargetDirectory(), $backupLocation);
         }
 
         //Run composer
         if ($config->shouldRunComposer()) {
             $output->writeln("\n<comment>## Running composer on target directory ##</comment>");
-            $this->getComposerManager()->run($config->getTargetDirectory());
+            $this->getComposerShell()->run($config->getTargetDirectory());
         }
 
         //Create post composer links
         if (count($config->getPostComposerDirectoryPaths()) > 0) {
             $output->writeln("\n<comment>## Creating post composer links to target directory ##</comment>");
-            $this->getLinkManager()->createLinks(
+            $this->getLinkShell()->createLinks(
                 $config->getPostComposerDirectoryPaths(),
                 $config->getTargetDirectory()
             );
@@ -97,31 +91,61 @@ class MakeCommand extends Command
         //Run Grunt
         if ($config->shouldRunGrunt()) {
             $output->writeln("\n<comment>## Running grunt on target directory ##</comment>");
-            $this->getGruntManager()->run($config->getTargetDirectory());
+            $this->getGruntShell()->run($config->getTargetDirectory());
         }
 
         //Clean up target directory
         $output->writeln("\n<comment>## Cleaning up target directory ##</comment>");
-        $this->getDirectoryManager()->cleanup($config->getTargetDirectory());
+        $this->getDirectoryShell()->cleanup($config->getTargetDirectory());
+    }
+
+    /**
+     * @return MakeCommand
+     * @author Cristian Quiroz <cris@qcas.co>
+     */
+    public function enableTestMode()
+    {
+        $this->getDirectoryShell()->enableTestMode();
+        $this->getLinkShell()->enableTestMode();
+        $this->getComposerShell()->enableTestMode();
+        $this->getGruntShell()->enableTestMode();
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @return MakeCommand
+     * @author Cristian Quiroz <cris@qcas.co>
+     */
+    public function setShellOutput(OutputInterface $output)
+    {
+        $this->setShellOutput($output);
+        $this->getDirectoryShell()->setOutput($output);
+        $this->getLinkShell()->setOutput($output);
+        $this->getComposerShell()->setOutput($output);
+        $this->getGruntShell()->setOutput($output);
+
+        return $this;
     }
 
     /**
      * @return Shell\Directory
      * @author Cristian Quiroz <cris@qcas.co>
      */
-    public function getDirectoryManager()
+    public function getDirectoryShell()
     {
-        return $this->directoryManager;
+        return $this->directoryShell;
     }
 
     /**
-     * @param Shell\Directory $directoryManager
+     * @param Shell\Directory $directoryShell
      * @author Cristian Quiroz <cris@qcas.co>
      * @return MakeCommand
      */
-    public function setDirectoryManager($directoryManager)
+    public function setDirectoryShell($directoryShell)
     {
-        $this->directoryManager = $directoryManager;
+        $this->directoryShell = $directoryShell;
 
         return $this;
     }
@@ -130,19 +154,19 @@ class MakeCommand extends Command
      * @return Shell\Link
      * @author Cristian Quiroz <cris@qcas.co>
      */
-    public function getLinkManager()
+    public function getLinkShell()
     {
-        return $this->linkManager;
+        return $this->linkShell;
     }
 
     /**
-     * @param Shell\Link $linkManager
+     * @param Shell\Link $linkShell
      * @author Cristian Quiroz <cris@qcas.co>
      * @return MakeCommand
      */
-    public function setLinkManager($linkManager)
+    public function setLinkShell($linkShell)
     {
-        $this->linkManager = $linkManager;
+        $this->linkShell = $linkShell;
 
         return $this;
     }
@@ -151,19 +175,19 @@ class MakeCommand extends Command
      * @return Shell\Composer
      * @author Cristian Quiroz <cris@qcas.co>
      */
-    public function getComposerManager()
+    public function getComposerShell()
     {
-        return $this->composerManager;
+        return $this->composerShell;
     }
 
     /**
-     * @param Shell\Composer $composerManager
+     * @param Shell\Composer $composerShell
      * @author Cristian Quiroz <cris@qcas.co>
      * @return MakeCommand
      */
-    public function setComposerManager($composerManager)
+    public function setComposerShell($composerShell)
     {
-        $this->composerManager = $composerManager;
+        $this->composerShell = $composerShell;
 
         return $this;
     }
@@ -172,19 +196,19 @@ class MakeCommand extends Command
      * @return Shell\Grunt
      * @author Cristian Quiroz <cris@qcas.co>
      */
-    public function getGruntManager()
+    public function getGruntShell()
     {
-        return $this->gruntManager;
+        return $this->gruntShell;
     }
 
     /**
-     * @param Shell\Grunt $gruntManager
+     * @param Shell\Grunt $gruntShell
      * @author Cristian Quiroz <cris@qcas.co>
      * @return MakeCommand
      */
-    public function setGruntManager($gruntManager)
+    public function setGruntShell($gruntShell)
     {
-        $this->gruntManager = $gruntManager;
+        $this->gruntShell = $gruntShell;
 
         return $this;
     }
