@@ -120,7 +120,6 @@ class MakeCommand extends Command
      */
     public function setShellOutput(OutputInterface $output)
     {
-        $this->setShellOutput($output);
         $this->getDirectoryShell()->setOutput($output);
         $this->getLinkShell()->setOutput($output);
         $this->getComposerShell()->setOutput($output);
