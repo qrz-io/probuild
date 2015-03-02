@@ -10,19 +10,19 @@ $application = new Application('Probuild', '@package_version@');
 //Create Shell
 $shell = new \Probuild\Shell();
 
-//Create Managers (they should all share the same Shell object)
-$directoryManager = new Shell\Directory();
-$linkManager = new Shell\Link();
-$composerManager = new Shell\Composer();
-$gruntManager = new Shell\Grunt();
+//Create Shells (they should all share the same Shell object)
+$directoryShell = new Shell\Directory();
+$linkShell = new Shell\Link();
+$composerShell = new Shell\Composer();
+$gruntShell = new Shell\Grunt();
 
 //Create and configure Make Command
 $makeCommand = new Command\MakeCommand();
 $makeCommand
-    ->setDirectoryManager($directoryManager)
-    ->setLinkManager($linkManager)
-    ->setComposerManager($composerManager)
-    ->setGruntManager($gruntManager);
+    ->setDirectoryShell($directoryShell)
+    ->setLinkShell($linkShell)
+    ->setComposerShell($composerShell)
+    ->setGruntShell($gruntShell);
 
 //Create Update Command
 $updateCommand = new Command\UpdateCommand();
