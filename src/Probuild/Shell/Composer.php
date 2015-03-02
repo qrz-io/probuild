@@ -7,6 +7,8 @@ use Probuild\Shell;
 class Composer extends Shell
 {
 
+    protected $composer = 'composer';
+
     /**
      * @param string $targetDir
      * @return Composer
@@ -19,8 +21,22 @@ class Composer extends Shell
             return $this;
         }
 
-        $this->exec("composer update -d {$targetDir}");
+        $this->exec("{$this->composer} update -d {$targetDir}");
 
         return $this;
     }
+
+    /**
+     * @param string $composer
+     * @author Cristian Quiroz <cris@qcas.co>
+     * @return Composer
+     */
+    public function setComposerCommand($composer)
+    {
+        $this->composer = $composer;
+
+        return $this;
+    }
+
+
 }

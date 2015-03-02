@@ -31,8 +31,8 @@ class MakeCommand extends Command
             ->setDescription('Makes the build with the specified configuration.')
             ->addArgument('config', InputArgument::OPTIONAL, 'Yaml config file with build settings. If not defined, config.yaml will be tried.')
             ->addOption('test', 't', InputOption::VALUE_NONE, 'If set, no commands will be executed.')
-            ->addOption('command-cp', 'cp', InputOption::VALUE_OPTIONAL, 'If set, overrides `cp` command.')
-            ->addOption('command-composer', 'composer', InputOption::VALUE_OPTIONAL, 'If set, overrides `composer` command.');
+            ->addOption('cp-command', 'c', InputOption::VALUE_REQUIRED, 'If set, overrides `cp` command.')
+            ->addOption('composer-command', 'p', InputOption::VALUE_REQUIRED, 'If set, overrides `composer` command.');
     }
 
     /**
@@ -52,6 +52,16 @@ class MakeCommand extends Command
         //Prepare shell
         if ($input->getOption('test')) {
             $this->enableTestMode();
+        }
+
+        //Use cp and composer if set
+        if ($cpCommand = $input->getOption('cp-command')) {
+            $this->getLinkShell()->setCpCommand($cpCommand);
+            $this->getDirectoryShell()->setCpCommand($cpCommand);
+        }
+
+        if ($composerCommand = $input->getOption('composer-command')) {
+            $this->getComposerShell()->setComposerCommand($composerCommand);
         }
 
         //Prepare Shells

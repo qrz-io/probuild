@@ -17,7 +17,7 @@ class Link extends Shell
     {
         foreach ($paths as $path) {
             $path = $this->prepareDirectoryPath($path);
-            $this->exec("cp -alf {$path}. $target");
+            $this->exec("{$this->cp} -alf {$path}. $target");
         }
 
         return $this;

@@ -11,6 +11,8 @@ class Shell
     protected $testMode = false;
     /** @var OutputInterface */
     protected $output;
+    /** @var string */
+    protected $cp = 'cp';
 
     /**
      * @param $command
@@ -89,4 +91,16 @@ class Shell
 
         return $this;
     }
+    /**
+     * @param string $cp
+     * @author Cristian Quiroz <cris@qcas.co>
+     * @return Shell
+     */
+    public function setCpCommand($cp)
+    {
+        $this->cp = $cp;
+
+        return $this;
+    }
+
 }
