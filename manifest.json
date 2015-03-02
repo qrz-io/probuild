@@ -10,5 +10,11 @@
         "sha1": "SHA1(probuild.phar)= 7131c107616108109d8c0a7642e4b5e5185dab4e",
         "url": "http://cristian-quiroz.github.io/probuild/downloads/probuild-1.1.0.phar",
         "version": "1.1.0"
+    },
+    {
+        "name": "probuild.phar",
+        "sha1": "SHA1(probuild.phar)= 9f0028eb799c9be18d6972ca421c636d49315e40",
+        "url": "http://cristian-quiroz.github.io/probuild/downloads/probuild-1.1.0.phar",
+        "version": "1.1.0"
     }
 ]
