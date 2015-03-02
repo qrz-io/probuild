@@ -9,6 +9,8 @@ class Shell
 
     /** @var bool */
     protected $testMode = false;
+    /** @var OutputInterface */
+    protected $output;
 
     /**
      * @param $command
@@ -35,6 +37,51 @@ class Shell
     public function enableTestMode()
     {
         $this->testMode = true;
+
+        return $this;
+    }
+
+    /**
+     * @param $text
+     * @return AbstractManager
+     * @author Cristian Quiroz <cris@qcas.co>
+     */
+    public function write($text)
+    {
+        $this->output->writeln($text);
+
+        return $this;
+    }
+
+    /**
+     * @param string $path
+     * @return string
+     * @author Cristian Quiroz <cris@qcas.co>
+     */
+    protected function prepareDirectoryPath($path)
+    {
+        $path = rtrim($path, '/') . '/';
+
+        return $path;
+    }
+
+    /**
+     * @return OutputInterface
+     * @author Cristian Quiroz <cris@qcas.co>
+     */
+    public function getOutput()
+    {
+        return $this->output;
+    }
+
+    /**
+     * @param OutputInterface $output
+     * @author Cristian Quiroz <cris@qcas.co>
+     * @return AbstractManager
+     */
+    public function setOutput($output)
+    {
+        $this->output = $output;
 
         return $this;
     }

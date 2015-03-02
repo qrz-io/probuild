@@ -1,10 +1,10 @@
 <?php
 
-namespace Probuild\Manager;
+namespace Probuild\Shell;
 
-use Probuild\AbstractManager;
+use Probuild\Shell;
 
-class Composer extends AbstractManager
+class Composer extends Shell
 {
 
     /**
@@ -19,7 +19,7 @@ class Composer extends AbstractManager
             return $this;
         }
         $this->write(
-            $this->getShell()->exec("composer update -d {$targetDir}")
+            $this->exec("composer update -d {$targetDir}")
         );
 
         return $this;

@@ -1,10 +1,10 @@
 <?php
 
-namespace Probuild\Manager;
+namespace Probuild\Shell;
 
-use Probuild\AbstractManager;
+use Probuild\Shell;
 
-class Directory extends AbstractManager
+class Directory extends Shell
 {
 
     const TEMP_FOLDER = '/tmp/probuild/';
@@ -30,10 +30,10 @@ class Directory extends AbstractManager
             if (file_exists($fullOrigPath)) {
                 $dirTempPath = pathinfo($fullTempPath, PATHINFO_DIRNAME);
                 $this->write(
-                    $this->getShell()->exec("mkdir -p -m 0777 {$dirTempPath}")
+                    $this->exec("mkdir -p -m 0777 {$dirTempPath}")
                 );
                 $this->write(
-                    $this->getShell()->exec("cp -r {$fullOrigPath} {$dirTempPath}")
+                    $this->exec("cp -r {$fullOrigPath} {$dirTempPath}")
                 );
             } else {
                 $this->write(
@@ -63,13 +63,13 @@ class Directory extends AbstractManager
         // remove target directory if it exists
         if (file_exists($target)) {
             $this->write(
-                $this->getShell()->exec("rm -rf {$target}")
+                $this->exec("rm -rf {$target}")
             );
         }
 
         // create target directory
         $this->write(
-            $this->getShell()->exec("mkdir -p -m 0777 {$target}")
+            $this->exec("mkdir -p -m 0777 {$target}")
         );
 
         return $this;
@@ -84,7 +84,7 @@ class Directory extends AbstractManager
     public function restore($targetDirectory, $backupDirectory)
     {
         $this->write(
-            $this->getShell()->exec("cp -r {$backupDirectory}. {$targetDirectory}")
+            $this->exec("cp -r {$backupDirectory}. {$targetDirectory}")
         );
 
         return $this;
@@ -98,15 +98,15 @@ class Directory extends AbstractManager
     public function cleanup($targetDirectory)
     {
         $this->write(
-            $this->getShell()->exec("chmod -R 777 {$targetDirectory}")
+            $this->exec("chmod -R 777 {$targetDirectory}")
         );
 
         $this->write(
-            $this->getShell()->exec("rm -rf `find {$targetDirectory} -type d -name .svn`")
+            $this->exec("rm -rf `find {$targetDirectory} -type d -name .svn`")
         );
 
         $this->write(
-            $this->getShell()->exec("rm -rf `find {$targetDirectory} -type d -name .git`")
+            $this->exec("rm -rf `find {$targetDirectory} -type d -name .git`")
         );
     }
 }

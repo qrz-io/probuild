@@ -1,10 +1,10 @@
 <?php
 
-namespace Probuild\Manager;
+namespace Probuild\Shell;
 
-use Probuild\AbstractManager;
+use Probuild\Shell;
 
-class Grunt extends AbstractManager
+class Grunt extends Shell
 {
 
     /**
@@ -33,10 +33,10 @@ class Grunt extends AbstractManager
         }
 
         $this->write(
-            $this->getShell()->exec("npm install --prefix {$targetDir} {$targetDir}")
+            $this->exec("npm install --prefix {$targetDir} {$targetDir}")
         );
         $this->write(
-            $this->getShell()->exec("grunt --gruntfile {$targetDir}/Gruntfile.js devbuild-force")
+            $this->exec("grunt --gruntfile {$targetDir}/Gruntfile.js devbuild-force")
         );
 
         return $this;

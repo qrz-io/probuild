@@ -3,7 +3,6 @@
 namespace Probuild\Command;
 
 use Probuild\Config;
-use Probuild\Manager;
 use Probuild\Shell;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -14,15 +13,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 class MakeCommand extends Command
 {
 
-    /** @var Shell */
-    protected $shell;
-    /** @var  Manager\Directory */
+    /** @var  Shell\Directory */
     protected $directoryManager;
-    /** @var Manager\Link */
+    /** @var Shell\Link */
     protected $linkManager;
-    /** @var Manager\Composer */
+    /** @var Shell\Composer */
     protected $composerManager;
-    /** @var Manager\Grunt */
+    /** @var Shell\Grunt */
     protected $gruntManager;
 
     /**
@@ -33,7 +30,9 @@ class MakeCommand extends Command
         $this->setName('make')
             ->setDescription('Makes the build with the specified configuration.')
             ->addArgument('config', InputArgument::REQUIRED, 'Yaml config file with build settings.')
-            ->addOption('test', 't', InputOption::VALUE_NONE, 'If set, no commands will be executed.');
+            ->addOption('test', 't', InputOption::VALUE_NONE, 'If set, no commands will be executed.')
+            ->addOption('command-cp', 'cp', InputOption::VALUE_OPTIONAL, 'If set, overrides `cp` command.')
+            ->addOption('command-composer', 'composer', InputOption::VALUE_OPTIONAL, 'If set, overrides `composer` command.');
     }
 
     /**
@@ -48,7 +47,10 @@ class MakeCommand extends Command
 
         //Prepare shell
         if ($input->getOption('test')) {
-            $this->getShell()->enableTestMode();
+            $this->getDirectoryManager()->enableTestMode();
+            $this->getLinkManager()->enableTestMode();
+            $this->getComposerManager()->enableTestMode();
+            $this->getGruntManager()->enableTestMode();
         }
 
         //Prepare Managers
@@ -104,28 +106,7 @@ class MakeCommand extends Command
     }
 
     /**
-     * @return Shell
-     * @author Cristian Quiroz <cris@qcas.co>
-     */
-    public function getShell()
-    {
-        return $this->shell;
-    }
-
-    /**
-     * @param mixed $shell
-     * @author Cristian Quiroz <cris@qcas.co>
-     * @return MakeCommand
-     */
-    public function setShell($shell)
-    {
-        $this->shell = $shell;
-
-        return $this;
-    }
-
-    /**
-     * @return Manager\Directory
+     * @return Shell\Directory
      * @author Cristian Quiroz <cris@qcas.co>
      */
     public function getDirectoryManager()
@@ -134,7 +115,7 @@ class MakeCommand extends Command
     }
 
     /**
-     * @param Manager\Directory $directoryManager
+     * @param Shell\Directory $directoryManager
      * @author Cristian Quiroz <cris@qcas.co>
      * @return MakeCommand
      */
@@ -146,7 +127,7 @@ class MakeCommand extends Command
     }
 
     /**
-     * @return Manager\Link
+     * @return Shell\Link
      * @author Cristian Quiroz <cris@qcas.co>
      */
     public function getLinkManager()
@@ -155,7 +136,7 @@ class MakeCommand extends Command
     }
 
     /**
-     * @param Manager\Link $linkManager
+     * @param Shell\Link $linkManager
      * @author Cristian Quiroz <cris@qcas.co>
      * @return MakeCommand
      */
@@ -167,7 +148,7 @@ class MakeCommand extends Command
     }
 
     /**
-     * @return Manager\Composer
+     * @return Shell\Composer
      * @author Cristian Quiroz <cris@qcas.co>
      */
     public function getComposerManager()
@@ -176,7 +157,7 @@ class MakeCommand extends Command
     }
 
     /**
-     * @param Manager\Composer $composerManager
+     * @param Shell\Composer $composerManager
      * @author Cristian Quiroz <cris@qcas.co>
      * @return MakeCommand
      */
@@ -188,7 +169,7 @@ class MakeCommand extends Command
     }
 
     /**
-     * @return Manager\Grunt
+     * @return Shell\Grunt
      * @author Cristian Quiroz <cris@qcas.co>
      */
     public function getGruntManager()
@@ -197,7 +178,7 @@ class MakeCommand extends Command
     }
 
     /**
-     * @param Manager\Grunt $gruntManager
+     * @param Shell\Grunt $gruntManager
      * @author Cristian Quiroz <cris@qcas.co>
      * @return MakeCommand
      */

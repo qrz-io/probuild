@@ -1,10 +1,10 @@
 <?php
 
-namespace Probuild\Manager;
+namespace Probuild\Shell;
 
-use Probuild\AbstractManager;
+use Probuild\Shell;
 
-class Link extends AbstractManager
+class Link extends Shell
 {
 
     /**
@@ -18,7 +18,7 @@ class Link extends AbstractManager
         foreach ($paths as $path) {
             $path = $this->prepareDirectoryPath($path);
             $this->write(
-                $this->getShell()->exec("cp -alf {$path}. $target")
+                $this->exec("cp -alf {$path}. $target")
             );
         }
 
