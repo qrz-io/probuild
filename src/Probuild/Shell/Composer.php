@@ -16,8 +16,8 @@ class Composer extends Shell
      */
     public function run($targetDir)
     {
-        if (!`which composer`) {
-            $this->write('<error>\'composer\' is not installed.</error>');
+        if (!`which {$this->composer}`) {
+            $this->write(sprintf('<error>\'%s\' is not installed.</error>', $this->composer));
             return $this;
         }
 
