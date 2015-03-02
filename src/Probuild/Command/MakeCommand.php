@@ -29,7 +29,7 @@ class MakeCommand extends Command
     {
         $this->setName('make')
             ->setDescription('Makes the build with the specified configuration.')
-            ->addArgument('config', InputArgument::REQUIRED, 'Yaml config file with build settings.')
+            ->addArgument('config', InputArgument::OPTIONAL, 'Yaml config file with build settings. If not defined, config.yaml will be tried.')
             ->addOption('test', 't', InputOption::VALUE_NONE, 'If set, no commands will be executed.')
             ->addOption('command-cp', 'cp', InputOption::VALUE_OPTIONAL, 'If set, overrides `cp` command.')
             ->addOption('command-composer', 'composer', InputOption::VALUE_OPTIONAL, 'If set, overrides `composer` command.');
@@ -43,7 +43,11 @@ class MakeCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $config = new Config($input->getArgument('config'));
+        $configFile = $input->getArgument('config');
+        if (!$configFile) {
+            $configFile = './config.yaml';
+        }
+        $config = new Config($configFile);
 
         //Prepare shell
         if ($input->getOption('test')) {
