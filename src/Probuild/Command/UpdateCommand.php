@@ -32,7 +32,15 @@ class UpdateCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $versionBefore = $this->getApplication()->getVersion();
+
+        $output->writeln("<info>Probuild</info> version <comment>{$versionBefore}</comment>.\nChecking for updates...");
+
         $manager = new Manager(Manifest::loadFile(self::MANIFEST_FILE));
-        $manager->update($this->getApplication()->getVersion(), true);
+        if ($manager->update($this->getApplication()->getVersion(), true)) {
+            $output->writeln("<info>Updated to latest version.</info>");
+        } else {
+            $output->writeln("<info>Already on latest version.</info>");
+        }
     }
 }
