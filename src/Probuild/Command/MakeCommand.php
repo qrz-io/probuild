@@ -105,7 +105,7 @@ class MakeCommand extends Command
         //Run Grunt
         if ($config->shouldRunGrunt()) {
             $output->writeln("\n<comment>## Running grunt on target directory ##</comment>");
-            $this->getGruntShell()->run($config->getTargetDirectory());
+            $this->getGruntShell()->run($config->getTargetDirectory(), $config->getGruntTasks());
         }
 
         //Clean up target directory

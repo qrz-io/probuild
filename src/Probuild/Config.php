@@ -14,6 +14,7 @@ class Config
     const COMPOSER = 'composer';
     const POST_COMPOSER_DIR_PATHS = 'post-composer-dir-paths';
     const GRUNT = 'grunt';
+    const GRUNT_TASKS = 'grunt-tasks';
 
     /** @var array */
     protected $data;
@@ -112,6 +113,21 @@ class Config
     public function shouldRunGrunt()
     {
         return array_key_exists(self::GRUNT, $this->data) && $this->data[self::GRUNT] == true;
+    }
+
+    /**
+     * @return array
+     * @author Cristian Quiroz <cris@qrz.io>
+     */
+    public function getGruntTasks()
+    {
+        if (!array_key_exists(self::GRUNT_TASKS, $this->data)
+            || !is_array($this->data[self::GRUNT_TASKS])
+        ) {
+            return array();
+        }
+
+        return $this->data[self::GRUNT_TASKS];
     }
 
     /**

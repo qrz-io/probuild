@@ -9,10 +9,11 @@ class Grunt extends Shell
 
     /**
      * @param string $targetDir
+     * @param array $tasks
      * @return Grunt
      * @author Cristian Quiroz <cris@qcas.co>
      */
-    public function run($targetDir)
+    public function run($targetDir, $tasks)
     {
         if (!`which npm`) {
             $this->write('<error>\'npm\' is not installed. </error>');
@@ -33,7 +34,9 @@ class Grunt extends Shell
         }
 
         $this->exec("npm install --prefix {$targetDir} {$targetDir}");
-        $this->exec("grunt --gruntfile {$targetDir}/Gruntfile.js devbuild-force");
+        foreach ($tasks as $task) {
+            $this->exec("grunt --gruntfile {$targetDir}/Gruntfile.js {$task}");
+        }
 
         return $this;
     }

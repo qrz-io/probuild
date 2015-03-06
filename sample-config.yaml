@@ -14,3 +14,7 @@ post-composer-dir-paths:        #List of directories to symlink into target dire
   - "/post/composer/path2"
 
 grunt: true                     #Should grunt be run
+grunt-tasks:
+  - "task1"
+  - "task2"
+  - "task3"
