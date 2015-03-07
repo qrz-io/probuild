@@ -24,10 +24,18 @@ $makeCommand
     ->setComposerShell($composerShell)
     ->setGruntShell($gruntShell);
 
+//Create and configure LinkCommand
+$linkCommand = new Command\LinkCommand();
+$linkCommand
+    ->setDirectoryShell($directoryShell)
+    ->setLinkShell($linkShell);
+
+
 //Create Update Command
 $updateCommand = new Command\UpdateCommand();
 
 $application->add($makeCommand);
 $application->add($updateCommand);
+$application->add($linkCommand);
 
 return $application;
