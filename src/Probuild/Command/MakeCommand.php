@@ -4,23 +4,13 @@ namespace Probuild\Command;
 
 use Probuild\Config;
 use Probuild\Shell;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class MakeCommand extends Command
+class MakeCommand extends CommandAbstract
 {
-
-    /** @var  Shell\Directory */
-    protected $directoryShell;
-    /** @var Shell\Link */
-    protected $linkShell;
-    /** @var Shell\Composer */
-    protected $composerShell;
-    /** @var Shell\Grunt */
-    protected $gruntShell;
 
     /**
      * @author Cristian Quiroz <cris@qcas.co>
@@ -44,10 +34,7 @@ class MakeCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $configFile = $input->getArgument('config');
-        if (!$configFile) {
-            $configFile = './config.yaml';
-        }
-        $config = new Config($configFile);
+        $config = $this->getConfig($configFile);
 
         //Prepare shell
         if ($input->getOption('test')) {
@@ -111,118 +98,5 @@ class MakeCommand extends Command
         //Clean up target directory
         $output->writeln("\n<comment>## Cleaning up target directory ##</comment>");
         $this->getDirectoryShell()->cleanup($config->getTargetDirectory());
-    }
-
-    /**
-     * @return MakeCommand
-     * @author Cristian Quiroz <cris@qcas.co>
-     */
-    public function enableTestMode()
-    {
-        $this->getDirectoryShell()->enableTestMode();
-        $this->getLinkShell()->enableTestMode();
-        $this->getComposerShell()->enableTestMode();
-        $this->getGruntShell()->enableTestMode();
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @return MakeCommand
-     * @author Cristian Quiroz <cris@qcas.co>
-     */
-    public function setShellOutput(OutputInterface $output)
-    {
-        $this->getDirectoryShell()->setOutput($output);
-        $this->getLinkShell()->setOutput($output);
-        $this->getComposerShell()->setOutput($output);
-        $this->getGruntShell()->setOutput($output);
-
-        return $this;
-    }
-
-    /**
-     * @return Shell\Directory
-     * @author Cristian Quiroz <cris@qcas.co>
-     */
-    public function getDirectoryShell()
-    {
-        return $this->directoryShell;
-    }
-
-    /**
-     * @param Shell\Directory $directoryShell
-     * @author Cristian Quiroz <cris@qcas.co>
-     * @return MakeCommand
-     */
-    public function setDirectoryShell($directoryShell)
-    {
-        $this->directoryShell = $directoryShell;
-
-        return $this;
-    }
-
-    /**
-     * @return Shell\Link
-     * @author Cristian Quiroz <cris@qcas.co>
-     */
-    public function getLinkShell()
-    {
-        return $this->linkShell;
-    }
-
-    /**
-     * @param Shell\Link $linkShell
-     * @author Cristian Quiroz <cris@qcas.co>
-     * @return MakeCommand
-     */
-    public function setLinkShell($linkShell)
-    {
-        $this->linkShell = $linkShell;
-
-        return $this;
-    }
-
-    /**
-     * @return Shell\Composer
-     * @author Cristian Quiroz <cris@qcas.co>
-     */
-    public function getComposerShell()
-    {
-        return $this->composerShell;
-    }
-
-    /**
-     * @param Shell\Composer $composerShell
-     * @author Cristian Quiroz <cris@qcas.co>
-     * @return MakeCommand
-     */
-    public function setComposerShell($composerShell)
-    {
-        $this->composerShell = $composerShell;
-
-        return $this;
-    }
-
-    /**
-     * @return Shell\Grunt
-     * @author Cristian Quiroz <cris@qcas.co>
-     */
-    public function getGruntShell()
-    {
-        return $this->gruntShell;
-    }
-
-    /**
-     * @param Shell\Grunt $gruntShell
-     * @author Cristian Quiroz <cris@qcas.co>
-     * @return MakeCommand
-     */
-    public function setGruntShell($gruntShell)
-    {
-        $this->gruntShell = $gruntShell;
-
-        return $this;
     }
 }

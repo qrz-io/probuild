@@ -4,19 +4,13 @@ namespace Probuild\Command;
 
 use Probuild\Config;
 use Probuild\Shell;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class LinkCommand extends Command
+class LinkCommand extends CommandAbstract
 {
-
-    /** @var  Shell\Directory */
-    protected $directoryShell;
-    /** @var Shell\Link */
-    protected $linkShell;
 
     /**
      * @author Cristian Quiroz <cris@qcas.co>
@@ -39,10 +33,7 @@ class LinkCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $configFile = $input->getArgument('config');
-        if (!$configFile) {
-            $configFile = './config.yaml';
-        }
-        $config = new Config($configFile);
+        $config = $this->getConfig($configFile);
 
         //Prepare shell
         if ($input->getOption('test')) {
@@ -74,72 +65,5 @@ class LinkCommand extends Command
         //Clean up target directory
         $output->writeln("\n<comment>## Cleaning up target directory ##</comment>");
         $this->getDirectoryShell()->cleanup($config->getTargetDirectory());
-    }
-
-    /**
-     * @return MakeCommand
-     * @author Cristian Quiroz <cris@qcas.co>
-     */
-    public function enableTestMode()
-    {
-        $this->getDirectoryShell()->enableTestMode();
-        $this->getLinkShell()->enableTestMode();
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @return MakeCommand
-     * @author Cristian Quiroz <cris@qcas.co>
-     */
-    public function setShellOutput(OutputInterface $output)
-    {
-        $this->getDirectoryShell()->setOutput($output);
-        $this->getLinkShell()->setOutput($output);
-
-        return $this;
-    }
-
-    /**
-     * @return Shell\Directory
-     * @author Cristian Quiroz <cris@qcas.co>
-     */
-    public function getDirectoryShell()
-    {
-        return $this->directoryShell;
-    }
-
-    /**
-     * @param Shell\Directory $directoryShell
-     * @author Cristian Quiroz <cris@qcas.co>
-     * @return MakeCommand
-     */
-    public function setDirectoryShell($directoryShell)
-    {
-        $this->directoryShell = $directoryShell;
-
-        return $this;
-    }
-
-    /**
-     * @return Shell\Link
-     * @author Cristian Quiroz <cris@qcas.co>
-     */
-    public function getLinkShell()
-    {
-        return $this->linkShell;
-    }
-
-    /**
-     * @param Shell\Link $linkShell
-     * @author Cristian Quiroz <cris@qcas.co>
-     * @return MakeCommand
-     */
-    public function setLinkShell($linkShell)
-    {
-        $this->linkShell = $linkShell;
-
-        return $this;
     }
 }
