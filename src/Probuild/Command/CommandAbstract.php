@@ -174,7 +174,7 @@ class CommandAbstract extends Command
      */
     public function runGrunt(OutputInterface $output, Config $config)
     {
-        if ($config->shouldRunGrunt()) {
+        if ($config->shouldRunGrunt() && count($config->getGruntTasks()) > 0) {
             $output->writeln("\n<comment>## Running grunt on target directory ##</comment>");
             $this->getGruntShell()->run($config->getTargetDirectory(), $config->getGruntTasks());
         }
