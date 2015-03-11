@@ -54,49 +54,12 @@ class MakeCommand extends CommandAbstract
         //Prepare Shells
         $this->setShellOutput($output);
 
-        //Prepare target Directory
-        $backupLocation = null;
-        if ($config->shouldCleanTargetDirectory()) {
-            $output->writeln("\n<comment>## Cleaning target directory ##</comment>");
-            $backupLocation = $this->getDirectoryShell()->backup(
-                $config->getTargetDirectory(), $config->getCleanExceptions()
-            );
-            $this->getDirectoryShell()->clean($config->getTargetDirectory());
-        }
-
-        //Create main links
-        $output->writeln("\n<comment>## Creating links to target directory ##</comment>");
-        $this->getLinkShell()->createLinks($config->getDirectoryPaths(), $config->getTargetDirectory());
-
-        //Restore exceptions, if any
-        if ($backupLocation !== null) {
-            $output->writeln("\n<comment>## Restoring backups to target directory ##</comment>");
-            $this->getDirectoryShell()->restore($config->getTargetDirectory(), $backupLocation);
-        }
-
-        //Run composer
-        if ($config->shouldRunComposer()) {
-            $output->writeln("\n<comment>## Running composer on target directory ##</comment>");
-            $this->getComposerShell()->run($config->getTargetDirectory());
-        }
-
-        //Create post composer links
-        if (count($config->getPostComposerDirectoryPaths()) > 0) {
-            $output->writeln("\n<comment>## Creating post composer links to target directory ##</comment>");
-            $this->getLinkShell()->createLinks(
-                $config->getPostComposerDirectoryPaths(),
-                $config->getTargetDirectory()
-            );
-        }
-
-        //Run Grunt
-        if ($config->shouldRunGrunt()) {
-            $output->writeln("\n<comment>## Running grunt on target directory ##</comment>");
-            $this->getGruntShell()->run($config->getTargetDirectory(), $config->getGruntTasks());
-        }
-
-        //Clean up target directory
-        $output->writeln("\n<comment>## Cleaning up target directory ##</comment>");
-        $this->getDirectoryShell()->cleanup($config->getTargetDirectory());
+        $backupLocation = $this->prepareTargetDirectory($output, $config);
+        $this->createMainLinks($output, $config);
+        $this->restoreBackup($output, $config, $backupLocation);
+        $this->runComposer($output, $config);
+        $this->createPostComposerLinks($output, $config);
+        $this->runGrunt($output, $config);
+        $this->cleanup($output, $config);
     }
 }

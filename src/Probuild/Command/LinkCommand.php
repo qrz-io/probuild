@@ -49,21 +49,8 @@ class LinkCommand extends CommandAbstract
         //Prepare Shells
         $this->setShellOutput($output);
 
-        //Create main links
-        $output->writeln("\n<comment>## Creating links to target directory ##</comment>");
-        $this->getLinkShell()->createLinks($config->getDirectoryPaths(), $config->getTargetDirectory());
-
-        //Create post composer links
-        if (count($config->getPostComposerDirectoryPaths()) > 0) {
-            $output->writeln("\n<comment>## Creating post composer links to target directory ##</comment>");
-            $this->getLinkShell()->createLinks(
-                $config->getPostComposerDirectoryPaths(),
-                $config->getTargetDirectory()
-            );
-        }
-
-        //Clean up target directory
-        $output->writeln("\n<comment>## Cleaning up target directory ##</comment>");
-        $this->getDirectoryShell()->cleanup($config->getTargetDirectory());
+        $this->createMainLinks($output, $config);
+        $this->createPostComposerLinks($output, $config);
+        $this->cleanup($output, $config);
     }
 }

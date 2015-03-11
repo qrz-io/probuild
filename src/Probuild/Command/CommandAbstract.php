@@ -89,6 +89,110 @@ class CommandAbstract extends Command
     }
 
     /**
+     * @param Config $config
+     * @param $output
+     * @return null|string
+     * @author Cristian Quiroz <cris@qrz.io>
+     */
+    public function prepareTargetDirectory(OutputInterface $output, Config $config)
+    {
+        $backupLocation = null;
+        if ($config->shouldCleanTargetDirectory()) {
+            $output->writeln("\n<comment>## Cleaning target directory ##</comment>");
+            $backupLocation = $this->getDirectoryShell()->backup(
+                $config->getTargetDirectory(), $config->getCleanExceptions()
+            );
+            $this->getDirectoryShell()->clean($config->getTargetDirectory());
+        }
+
+        return $backupLocation;
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @param \Probuild\Config $config
+     * @return void
+     * @author Cristian Quiroz <cris@qrz.io>
+     */
+    public function createMainLinks(OutputInterface $output, Config $config)
+    {
+        $output->writeln("\n<comment>## Creating links to target directory ##</comment>");
+        $this->getLinkShell()->createLinks($config->getDirectoryPaths(), $config->getTargetDirectory());
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @param \Probuild\Config $config
+     * @param string $backupLocation
+     * @return void
+     * @author Cristian Quiroz <cris@qrz.io>
+     */
+    public function restoreBackup(OutputInterface $output, Config $config, $backupLocation)
+    {
+        if ($backupLocation !== null) {
+            $output->writeln("\n<comment>## Restoring backups to target directory ##</comment>");
+            $this->getDirectoryShell()->restore($config->getTargetDirectory(), $backupLocation);
+        }
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @param \Probuild\Config $config
+     * @return void
+     * @author Cristian Quiroz <cris@qrz.io>
+     */
+    public function runComposer(OutputInterface $output, Config $config)
+    {
+        if ($config->shouldRunComposer()) {
+            $output->writeln("\n<comment>## Running composer on target directory ##</comment>");
+            $this->getComposerShell()->run($config->getTargetDirectory());
+        }
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @param \Probuild\Config $config
+     * @return void
+     * @author Cristian Quiroz <cris@qrz.io>
+     */
+    public function createPostComposerLinks(OutputInterface $output, Config $config)
+    {
+        if (count($config->getPostComposerDirectoryPaths()) > 0) {
+            $output->writeln("\n<comment>## Creating post composer links to target directory ##</comment>");
+            $this->getLinkShell()->createLinks(
+                $config->getPostComposerDirectoryPaths(),
+                $config->getTargetDirectory()
+            );
+        }
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @param \Probuild\Config $config
+     * @return void
+     * @author Cristian Quiroz <cris@qrz.io>
+     */
+    public function runGrunt(OutputInterface $output, Config $config)
+    {
+        if ($config->shouldRunGrunt()) {
+            $output->writeln("\n<comment>## Running grunt on target directory ##</comment>");
+            $this->getGruntShell()->run($config->getTargetDirectory(), $config->getGruntTasks());
+        }
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @param \Probuild\Config $config
+     * @return void
+     * @author Cristian Quiroz <cris@qrz.io>
+     */
+    public function cleanup(OutputInterface $output, Config $config)
+    {
+        $output->writeln("\n<comment>## Cleaning up target directory ##</comment>");
+        $this->getDirectoryShell()->cleanup($config->getTargetDirectory());
+    }
+
+    /**
      * @return Shell\Directory
      * @author Cristian Quiroz <cris@qcas.co>
      */
