@@ -1,6 +1,6 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/qrz-io/probuild/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/qrz-io/probuild/?branch=master)
 
-## Probuild
+# Probuild
 
 A simple CLI application to help manage projects. This is useful when working with applications that doesn't support composer or when working on new code for composer modules locally, for testing with other applications or modules.
 
