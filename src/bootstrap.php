@@ -30,13 +30,18 @@ $linkCommand
     ->setDirectoryShell($directoryShell)
     ->setLinkShell($linkShell);
 
-//Create and configure LinkCommand
+//Create and configure ComposerCommand
 $composerCommand = new Command\ComposerCommand();
 $composerCommand
     ->setDirectoryShell($directoryShell)
     ->setComposerShell($composerShell)
     ->setLinkShell($linkShell);
 
+//Create and configure GruntCommand
+$gruntCommand = new Command\GruntCommand();
+$gruntCommand
+    ->setDirectoryShell($directoryShell)
+    ->setGruntShell($gruntShell);
 
 //Create Update Command
 $updateCommand = new Command\UpdateCommand();
@@ -45,5 +50,6 @@ $application->add($makeCommand);
 $application->add($updateCommand);
 $application->add($linkCommand);
 $application->add($composerCommand);
+$application->add($gruntCommand);
 
 return $application;
