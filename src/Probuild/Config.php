@@ -66,11 +66,7 @@ class Config
      */
     public function getCleanExceptions()
     {
-        if (!array_key_exists(self::CLEAN_EXCEPTIONS, $this->data) || !is_array($this->data[self::CLEAN_EXCEPTIONS])) {
-            return array();
-        }
-
-        return $this->data[self::CLEAN_EXCEPTIONS];
+        return $this->getDataArrayFromConfig(self::CLEAN_EXCEPTIONS);
     }
 
     /**
@@ -97,13 +93,7 @@ class Config
      */
     public function getPostComposerDirectoryPaths()
     {
-        if (!array_key_exists(self::POST_COMPOSER_DIR_PATHS, $this->data)
-            || !is_array($this->data[self::POST_COMPOSER_DIR_PATHS])
-        ) {
-            return array();
-        }
-
-        return $this->data[self::POST_COMPOSER_DIR_PATHS];
+        return $this->getDataArrayFromConfig(self::POST_COMPOSER_DIR_PATHS);
     }
 
     /**
@@ -121,13 +111,16 @@ class Config
      */
     public function getGruntTasks()
     {
-        if (!array_key_exists(self::GRUNT_TASKS, $this->data)
-            || !is_array($this->data[self::GRUNT_TASKS])
-        ) {
+        return $this->getDataArrayFromConfig(self::GRUNT_TASKS);
+    }
+
+    protected function getDataArrayFromConfig($key)
+    {
+        if (!array_key_exists($key, $this->data) || !is_array($this->data[$key])) {
             return array();
         }
 
-        return $this->data[self::GRUNT_TASKS];
+        return $this->data[$key];
     }
 
     /**
