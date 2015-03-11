@@ -180,6 +180,10 @@ class Config
      */
     protected function validate($config)
     {
+        if (!is_array($config)) {
+            throw new Exception\InvalidConfig('Config could not be parsed correctly.');
+        }
+
         if (!array_key_exists(self::TARGET_DIR, $config)) {
             throw new Exception\InvalidConfig(sprintf('\'%s\' has not been specified in the config.', self::TARGET_DIR));
         }
