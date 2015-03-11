@@ -50,10 +50,8 @@ class Directory extends Shell
     {
         // checks for irrational fears
         if ($target == "/" || strlen($target) <= 1) {
-            $this->write(
-                sprintf('<error>\'%s\' is not a valid target directory. Exiting.</error>', $target)
-            );
-            die;
+            throw new InvalidConfig('<error>\'%s\' is not a valid target directory. Exiting.</error>', $target);
+
         }
 
         // remove target directory if it exists
