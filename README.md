@@ -1,7 +1,10 @@
-## Probuild
-
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/qrz-io/probuild/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/qrz-io/probuild/?branch=master)
 
+## Probuild
+
+A simple CLI application to help manage projects. This is useful when working with applications that doesn't support composer or when working on new code for composer modules locally, for testing with other applications or modules.
+
+Personally, I use it for working with Magento 1.x.
 
 # Installation
 To install simply download the phar, make it executable and optionally move it to a system wide location.
