@@ -11,7 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class UpdateCommand extends Command
 {
 
-    const MANIFEST_FILE = 'http://cristian-quiroz.github.io/probuild/manifest.json';
+    const MANIFEST_FILE = 'http://qrz-io.github.io/probuild/manifest.json';
 
     /**
      * @return void
