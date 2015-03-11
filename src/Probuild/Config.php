@@ -20,7 +20,7 @@ class Config
     protected $data;
 
     /**
-     * @param $file
+     * @param string $file
      * @author Cristian Quiroz <cris@qcas.co>
      */
     public function __construct($file)
@@ -114,6 +114,11 @@ class Config
         return $this->getDataArrayFromConfig(self::GRUNT_TASKS);
     }
 
+    /**
+     * @param string $key
+     * @return array
+     * @author Cristian Quiroz <cris@qrz.io>
+     */
     protected function getDataArrayFromConfig($key)
     {
         if (!array_key_exists($key, $this->data) || !is_array($this->data[$key])) {

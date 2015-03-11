@@ -22,7 +22,7 @@ class ComposerCommand extends CommandAbstract
             ->addArgument('config', InputArgument::OPTIONAL, 'Yaml config file with build settings. If not defined, config.yaml will be tried.')
             ->addOption('test', 't', InputOption::VALUE_NONE, 'If set, no commands will be executed.')
             ->addOption('cp-command', 'c', InputOption::VALUE_REQUIRED, 'If set, overrides `cp` command.')
-            ->addOption('composer-command', 'p', InputOption::VALUE_REQUIRED, 'If set, overrides `composer` command.');;
+            ->addOption('composer-command', 'p', InputOption::VALUE_REQUIRED, 'If set, overrides `composer` command.');
     }
 
     /**
