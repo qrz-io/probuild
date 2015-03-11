@@ -30,6 +30,13 @@ $linkCommand
     ->setDirectoryShell($directoryShell)
     ->setLinkShell($linkShell);
 
+//Create and configure LinkCommand
+$composerCommand = new Command\ComposerCommand();
+$composerCommand
+    ->setDirectoryShell($directoryShell)
+    ->setComposerShell($composerShell)
+    ->setLinkShell($linkShell);
+
 
 //Create Update Command
 $updateCommand = new Command\UpdateCommand();
@@ -37,5 +44,6 @@ $updateCommand = new Command\UpdateCommand();
 $application->add($makeCommand);
 $application->add($updateCommand);
 $application->add($linkCommand);
+$application->add($composerCommand);
 
 return $application;
