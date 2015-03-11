@@ -54,6 +54,7 @@ class MakeCommand extends CommandAbstract
         //Prepare Shells
         $this->setShellOutput($output);
 
+        //Execute
         $backupLocation = $this->prepareTargetDirectory($output, $config);
         $this->createMainLinks($output, $config);
         $this->restoreBackup($output, $config, $backupLocation);
