@@ -13,8 +13,8 @@
     },
     {
         "name": "probuild.phar",
-        "sha1": "dbd50d0f30627684c0aceb96c10343a747e76c51",
-        "url": "http://cristian-quiroz.github.io/probuild/downloads/probuild-1.2.0.phar",
+        "sha1": "b3f56a80e758a21d9aac8fb29183f31a796050a5",
+        "url": "http://cristian-quiroz.github.io/probuild/downloads/probuild-1.2.1.phar",
         "version": "1.2.0"
     }
 ]
