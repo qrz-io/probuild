@@ -145,7 +145,11 @@ class CommandAbstract extends Command
     {
         if ($config->shouldRunComposer()) {
             $output->writeln("\n<comment>## Running composer on target directory ##</comment>");
-            $this->getComposerShell()->run($config->getTargetDirectory());
+            $this->getComposerShell()->run(
+                $config->getTargetDirectory(),
+                $config->shouldRunComposerUpdate(),
+                $config->shouldRunComposerNoDev()
+            );
         }
     }
 

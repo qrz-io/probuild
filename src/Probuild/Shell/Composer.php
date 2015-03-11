@@ -14,14 +14,18 @@ class Composer extends Shell
      * @return Composer
      * @author Cristian Quiroz <cris@qcas.co>
      */
-    public function run($targetDir)
+    public function run($targetDir, $update, $noDev)
     {
         if (!`which {$this->composer}`) {
             $this->write(sprintf('<error>\'%s\' is not installed.</error>', $this->composer));
             return $this;
         }
 
-        $this->exec("{$this->composer} update -d {$targetDir}");
+        $composerCommand = $this->composer;
+        $composerCommand .= $update ? ' update' : ' install';
+        $composerCommand .= $noDev ? ' --no-dev' : '';
+
+        $this->exec("{$composerCommand} -d {$targetDir}");
 
         return $this;
     }

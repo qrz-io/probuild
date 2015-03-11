@@ -12,6 +12,8 @@ class Config
     const CLEAN_EXCEPTIONS = 'clean-exceptions';
     const DIR_PATHS = 'dir-paths';
     const COMPOSER = 'composer';
+    const COMPOSER_UPDATE = 'update';
+    const COMPOSER_NO_DEV = 'no-dev';
     const POST_COMPOSER_DIR_PATHS = 'post-composer-dir-paths';
     const GRUNT = 'grunt';
     const GRUNT_TASKS = 'grunt-tasks';
@@ -84,7 +86,25 @@ class Config
      */
     public function shouldRunComposer()
     {
-        return array_key_exists(self::COMPOSER, $this->data) && $this->data[self::COMPOSER] == true;
+        return $this->isOptionTrueInConfig(self::COMPOSER);
+    }
+
+    /**
+     * @return bool
+     * @author Cristian Quiroz <cris@qrz.io>
+     */
+    public function shouldRunComposerUpdate()
+    {
+        return $this->isOptionTrueInConfig(self::COMPOSER_UPDATE);
+    }
+
+    /**
+     * @return bool
+     * @author Cristian Quiroz <cris@qrz.io>
+     */
+    public function shouldRunComposerNoDev()
+    {
+        return $this->isOptionTrueInConfig(self::COMPOSER_NO_DEV);
     }
 
     /**
@@ -102,7 +122,7 @@ class Config
      */
     public function shouldRunGrunt()
     {
-        return array_key_exists(self::GRUNT, $this->data) && $this->data[self::GRUNT] == true;
+        return $this->isOptionTrueInConfig(self::GRUNT);
     }
 
     /**
@@ -126,6 +146,16 @@ class Config
         }
 
         return $this->data[$key];
+    }
+
+    /**
+     * @param string $key
+     * @return bool
+     * @author Cristian Quiroz <cris@qrz.io>
+     */
+    protected function isOptionTrueInConfig($key)
+    {
+        return array_key_exists($key, $this->data) && $this->data[$key] == true;
     }
 
     /**

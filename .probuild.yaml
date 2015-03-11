@@ -9,6 +9,8 @@ dir-paths:                      #List of directories to symlink into target dire
   - "/path/to/dir2"
 
 composer: true                  #Should composer be run
+update: false                   #If true, composer update will be run. If false, composer install will be run.
+no-dev: false                   #Should composer be run with --no-dev
 post-composer-dir-paths:        #List of directories to symlink into target directory after running composer
   - "/post/composer/path1"
   - "/post/composer/path2"
