@@ -30,7 +30,7 @@ class CommandAbstract extends Command
     public function getConfig($configFile)
     {
         if (!$configFile) {
-            $configFile = './config.yaml';
+            $configFile = './.probuild.yaml';
         }
         $config = new Config($configFile);
 
