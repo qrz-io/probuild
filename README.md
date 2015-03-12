@@ -7,11 +7,11 @@ A simple CLI application to help manage projects. This is useful when working wi
 Personally, I use it for working with Magento 1.x.
 
 # Installation
-To install simply download the phar, make it executable and optionally move it to a system wide location.
+To install simply download the phar, make it executable and optionally move it to a system wide available location.
 ```
 wget http://qrz-io.github.io/probuild/probuild.phar
 chmod +x ./probuild.phar
-mv probuild.phar /usr/local/bin/
+mv probuild.phar /usr/local/bin/probuild
 ```
 
 # How to use
