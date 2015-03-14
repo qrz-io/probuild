@@ -2,25 +2,25 @@
     {
         "name": "probuild.phar",
         "sha1": "6aa293984573e9fa85c724692e065125b0d8add5",
-        "url": "http://cristian-quiroz.github.io/probuild/downloads/probuild-1.0.0.phar",
+        "url": "http://qrz-io.github.io/probuild/downloads/probuild-1.0.0.phar",
         "version": "1.0.0"
     },
     {
         "name": "probuild.phar",
         "sha1": "5dde82697f7c3958dc72ada0d603ecf7c43f39b7",
-        "url": "http://cristian-quiroz.github.io/probuild/downloads/probuild-1.1.0.phar",
+        "url": "http://qrz-io.github.io/probuild/downloads/probuild-1.1.0.phar",
         "version": "1.1.0"
     },
     {
         "name": "probuild.phar",
         "sha1": "b3f56a80e758a21d9aac8fb29183f31a796050a5",
-        "url": "http://cristian-quiroz.github.io/probuild/downloads/probuild-1.2.1.phar",
+        "url": "http://qrz-io.github.io/probuild/downloads/probuild-1.2.1.phar",
         "version": "1.2.1"
     },
     {
         "name": "probuild.phar",
         "sha1": "ba98420f272d3a1cfa46d2eca039e1aa3a14b4d5",
-        "url": "http://cristian-quiroz.github.io/probuild/downloads/probuild-1.3.0.phar",
+        "url": "http://qrz-io.github.io/probuild/downloads/probuild-1.3.0.phar",
         "version": "1.3.0"
     }
 ]
