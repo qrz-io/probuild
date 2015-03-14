@@ -30,7 +30,7 @@ class Directory extends Shell
             if (file_exists($fullOrigPath)) {
                 $dirTempPath = pathinfo($fullTempPath, PATHINFO_DIRNAME);
                 $this->exec("mkdir -p -m 0777 {$dirTempPath}");
-                $this->exec("{$this->cp} -r {$fullOrigPath} {$dirTempPath}");
+                $this->exec("cp -r {$fullOrigPath} {$dirTempPath}");
             } else {
                 $this->write(
                     sprintf('<error>\'%s\' is not a valid file. Ignoring.</error>', $fullOrigPath)
@@ -73,7 +73,7 @@ class Directory extends Shell
      */
     public function restore($targetDirectory, $backupDirectory)
     {
-        $this->exec("{$this->cp} -r {$backupDirectory}. {$targetDirectory}");
+        $this->exec("cp -r {$backupDirectory}. {$targetDirectory}");
 
         return $this;
     }

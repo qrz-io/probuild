@@ -12,7 +12,7 @@ class Shell
     /** @var OutputInterface */
     protected $output;
     /** @var string */
-    protected $cp = 'cp';
+    protected $cp = 'cp -alf';
 
     /**
      * @param $command
