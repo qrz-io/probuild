@@ -4,9 +4,13 @@ clean-exceptions:               #Files or directories that should be kept during
   - "path/to/file"
   - "path/to/directory/"
 
-dir-paths:                      #List of directories to symlink into target directory
+link-dir-paths:                 #List of directories to hard link into target directory
   - "/path/to/dir1"
   - "/path/to/dir2"
+
+copy-dir-paths:                 #List of directories to hard link into target directory
+  - "path/to/dir3"
+  - "path/to/dir4"
 
 composer: true                  #Should composer be run
 update: false                   #If true, composer update will be run. If false, composer install will be run.
