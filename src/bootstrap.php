@@ -12,7 +12,7 @@ $shell = new \Probuild\Shell();
 
 //Create Shells (they should all share the same Shell object)
 $directoryShell = new Shell\Directory();
-$linkShell = new Shell\Link();
+$copyShell = new Shell\Copy();
 $composerShell = new Shell\Composer();
 $gruntShell = new Shell\Grunt();
 
@@ -20,7 +20,7 @@ $gruntShell = new Shell\Grunt();
 $makeCommand = new Command\MakeCommand();
 $makeCommand
     ->setDirectoryShell($directoryShell)
-    ->setLinkShell($linkShell)
+    ->setCopyShell($copyShell)
     ->setComposerShell($composerShell)
     ->setGruntShell($gruntShell);
 
@@ -28,14 +28,14 @@ $makeCommand
 $linkCommand = new Command\LinkCommand();
 $linkCommand
     ->setDirectoryShell($directoryShell)
-    ->setLinkShell($linkShell);
+    ->setCopyShell($copyShell);
 
 //Create and configure ComposerCommand
 $composerCommand = new Command\ComposerCommand();
 $composerCommand
     ->setDirectoryShell($directoryShell)
     ->setComposerShell($composerShell)
-    ->setLinkShell($linkShell);
+    ->setCopyShell($copyShell);
 
 //Create and configure GruntCommand
 $gruntCommand = new Command\GruntCommand();

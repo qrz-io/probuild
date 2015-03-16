@@ -43,7 +43,7 @@ class ComposerCommand extends CommandAbstract
 
         //Use cp and composer if set
         if ($cpCommand = $input->getOption('cp-command')) {
-            $this->getLinkShell()->setCpCommand($cpCommand);
+            $this->getCopyShell()->setCpCommand($cpCommand);
             $this->getDirectoryShell()->setCpCommand($cpCommand);
         }
 

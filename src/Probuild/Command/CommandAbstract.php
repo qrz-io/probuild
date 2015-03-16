@@ -5,9 +5,6 @@ namespace Probuild\Command;
 use Probuild\Config;
 use Probuild\Shell;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class CommandAbstract extends Command
@@ -15,8 +12,8 @@ class CommandAbstract extends Command
 
     /** @var  Shell\Directory */
     protected $directoryShell;
-    /** @var Shell\Link */
-    protected $linkShell;
+    /** @var Shell\Copy */
+    protected $copyShell;
     /** @var Shell\Composer */
     protected $composerShell;
     /** @var Shell\Grunt */
@@ -47,8 +44,8 @@ class CommandAbstract extends Command
             $this->getDirectoryShell()->enableTestMode();
         }
 
-        if ($this->getLinkShell()) {
-            $this->getLinkShell()->enableTestMode();
+        if ($this->getCopyShell()) {
+            $this->getCopyShell()->enableTestMode();
         }
 
         if ($this->getComposerShell()) {
@@ -73,8 +70,8 @@ class CommandAbstract extends Command
             $this->getDirectoryShell()->setOutput($output);
         }
 
-        if ($this->getLinkShell()) {
-            $this->getLinkShell()->setOutput($output);
+        if ($this->getCopyShell()) {
+            $this->getCopyShell()->setOutput($output);
         }
 
         if ($this->getComposerShell()) {
@@ -114,10 +111,11 @@ class CommandAbstract extends Command
      * @return void
      * @author Cristian Quiroz <cris@qrz.io>
      */
-    public function createMainLinks(OutputInterface $output, Config $config)
+    public function copyAndLink(OutputInterface $output, Config $config)
     {
-        $output->writeln("\n<comment>## Creating links to target directory ##</comment>");
-        $this->getLinkShell()->createLinks($config->getDirectoryPaths(), $config->getTargetDirectory());
+        $output->writeln("\n<comment>## Copying and creating links to target directory ##</comment>");
+        $this->getCopyShell()->link($config->getLinkDirectoryPaths(), $config->getTargetDirectory());
+        $this->getCopyShell()->copy($config->getCopyDirectoryPaths(), $config->getTargetDirectory());
     }
 
     /**
@@ -163,7 +161,7 @@ class CommandAbstract extends Command
     {
         if (count($config->getPostComposerDirectoryPaths()) > 0) {
             $output->writeln("\n<comment>## Creating post composer links to target directory ##</comment>");
-            $this->getLinkShell()->createLinks(
+            $this->getCopyShell()->link(
                 $config->getPostComposerDirectoryPaths(),
                 $config->getTargetDirectory()
             );
@@ -218,22 +216,22 @@ class CommandAbstract extends Command
     }
 
     /**
-     * @return Shell\Link
+     * @return Shell\Copy
      * @author Cristian Quiroz <cris@qcas.co>
      */
-    public function getLinkShell()
+    public function getCopyShell()
     {
-        return $this->linkShell;
+        return $this->copyShell;
     }
 
     /**
-     * @param Shell\Link $linkShell
+     * @param Shell\Copy $copyShell
      * @author Cristian Quiroz <cris@qcas.co>
      * @return MakeCommand
      */
-    public function setLinkShell($linkShell)
+    public function setCopyShell($copyShell)
     {
-        $this->linkShell = $linkShell;
+        $this->copyShell = $copyShell;
 
         return $this;
     }

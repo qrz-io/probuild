@@ -12,7 +12,7 @@ class Shell
     /** @var OutputInterface */
     protected $output;
     /** @var string */
-    protected $cp = 'cp -alf';
+    protected $cp = 'cp';
 
     /**
      * @param $command
@@ -49,7 +49,7 @@ class Shell
 
     /**
      * @param $text
-     * @return AbstractManager
+     * @return Shell
      * @author Cristian Quiroz <cris@qcas.co>
      */
     public function write($text)
@@ -83,7 +83,7 @@ class Shell
     /**
      * @param OutputInterface $output
      * @author Cristian Quiroz <cris@qcas.co>
-     * @return AbstractManager
+     * @return Shell
      */
     public function setOutput($output)
     {
