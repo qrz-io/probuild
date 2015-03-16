@@ -8,7 +8,7 @@ link-dir-paths:                 #List of directories to hard link into target di
   - "/path/to/dir1"
   - "/path/to/dir2"
 
-copy-dir-paths:                 #List of directories to hard link into target directory
+copy-dir-paths:                 #List of directories to copy into target directory
   - "path/to/dir3"
   - "path/to/dir4"
 

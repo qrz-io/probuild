@@ -43,7 +43,7 @@ class MakeCommand extends CommandAbstract
 
         //Use cp and composer if set
         if ($cpCommand = $input->getOption('cp-command')) {
-            $this->getLinkShell()->setCpCommand($cpCommand);
+            $this->getCopyShell()->setCpCommand($cpCommand);
             $this->getDirectoryShell()->setCpCommand($cpCommand);
         }
 
@@ -56,7 +56,7 @@ class MakeCommand extends CommandAbstract
 
         //Execute
         $backupLocation = $this->prepareTargetDirectory($output, $config);
-        $this->createMainLinks($output, $config);
+        $this->copyAndLink($output, $config);
         $this->restoreBackup($output, $config, $backupLocation);
         $this->runComposer($output, $config);
         $this->createPostComposerLinks($output, $config);

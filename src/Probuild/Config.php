@@ -39,10 +39,8 @@ class Config
      */
     public function load($file)
     {
-        $data = $this->read($file);
-        $this->validate($data);
-
-        $this->data = $data;
+        $this->data = $this->read($file);
+        $this->validate();
     }
 
     /**
@@ -184,17 +182,16 @@ class Config
     }
 
     /**
-     * @param array $config
      * @throws Exception\InvalidConfig
      * @author Cristian Quiroz <cris@qcas.co>
      */
-    protected function validate($config)
+    protected function validate()
     {
-        if (!is_array($config)) {
+        if (!is_array($this->data)) {
             throw new Exception\InvalidConfig('Config could not be parsed correctly.');
         }
 
-        if (!array_key_exists(self::TARGET_DIR, $config)) {
+        if (!array_key_exists(self::TARGET_DIR, $this->data)) {
             throw new Exception\InvalidConfig(sprintf('\'%s\' has not been specified in the config.', self::TARGET_DIR));
         }
 

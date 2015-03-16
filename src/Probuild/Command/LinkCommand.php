@@ -42,7 +42,7 @@ class LinkCommand extends CommandAbstract
 
         //Use cp if set
         if ($cpCommand = $input->getOption('cp-command')) {
-            $this->getLinkShell()->setCpCommand($cpCommand);
+            $this->getCopyShell()->setCpCommand($cpCommand);
             $this->getDirectoryShell()->setCpCommand($cpCommand);
         }
 
@@ -50,7 +50,7 @@ class LinkCommand extends CommandAbstract
         $this->setShellOutput($output);
 
         //Execute
-        $this->createMainLinks($output, $config);
+        $this->copyAndLink($output, $config);
         $this->createPostComposerLinks($output, $config);
         $this->cleanup($output, $config);
     }
