@@ -10,7 +10,8 @@ class Config
     const TARGET_DIR = 'target-dir';
     const CLEAN = 'clean';
     const CLEAN_EXCEPTIONS = 'clean-exceptions';
-    const DIR_PATHS = 'dir-paths';
+    const LINK_DIR_PATHS = 'link-dir-paths';
+    const COPY_DIR_PATHS = 'copy-dir-paths';
     const COMPOSER = 'composer';
     const COMPOSER_UPDATE = 'update';
     const COMPOSER_NO_DEV = 'no-dev';
@@ -75,9 +76,18 @@ class Config
      * @return array
      * @author Cristian Quiroz <cris@qcas.co>
      */
-    public function getDirectoryPaths()
+    public function getLinkDirectoryPaths()
     {
-        return $this->data[self::DIR_PATHS];
+        return $this->data[self::LINK_DIR_PATHS];
+    }
+
+    /**
+     * @return array
+     * @author Cristian Quiroz <cris@qcas.co>
+     */
+    public function getCopyDirectoryPaths()
+    {
+        return $this->data[self::COPY_DIR_PATHS];
     }
 
     /**
@@ -188,8 +198,8 @@ class Config
             throw new Exception\InvalidConfig(sprintf('\'%s\' has not been specified in the config.', self::TARGET_DIR));
         }
 
-        if (!array_key_exists(self::DIR_PATHS, $config) || count($config[self::DIR_PATHS]) == 0) {
-            throw new Exception\InvalidConfig(sprintf('\'%s\' has not been specified in the config.', self::DIR_PATHS));
+        if (count($this->getDataArrayFromConfig(self::LINK_DIR_PATHS)) == 0 && count($this->getDataArrayFromConfig(self::COPY_DIR_PATHS)) == 0) {
+            throw new Exception\InvalidConfig(sprintf('No copy paths have been specified in the config.'));
         }
     }
 }
