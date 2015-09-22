@@ -76,7 +76,7 @@ class Config
      */
     public function getLinkDirectoryPaths()
     {
-        return $this->data[self::LINK_DIR_PATHS];
+        return $this->getDataArrayFromConfig(self::LINK_DIR_PATHS);
     }
 
     /**
@@ -85,7 +85,7 @@ class Config
      */
     public function getCopyDirectoryPaths()
     {
-        return $this->data[self::COPY_DIR_PATHS];
+        return $this->getDataArrayFromConfig(self::COPY_DIR_PATHS);
     }
 
     /**
