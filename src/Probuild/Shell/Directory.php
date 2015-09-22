@@ -85,7 +85,6 @@ class Directory extends Shell
      */
     public function cleanup($targetDirectory)
     {
-        $this->exec("chmod -R 777 {$targetDirectory}");
         $this->exec("rm -rf `find {$targetDirectory} -type d -name .svn`");
         $this->exec("rm -rf `find {$targetDirectory} -type d -name .git`");
     }
