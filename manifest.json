@@ -25,8 +25,8 @@
     },
     {
         "name": "probuild.phar",
-        "sha1": "1af68fced7a594028eecf6932fbd9e25bbb8cfdc",
-        "url": "http://qrz-io.github.io/probuild/downloads/probuild-1.4.0.phar",
-        "version": "1.4.0"
+        "sha1": "d840682489a18bbf4f31274d1dea91b9c4c4ab05",
+        "url": "http://qrz-io.github.io/probuild/downloads/probuild-1.4.1.phar",
+        "version": "1.4.1"
     }
 ]
