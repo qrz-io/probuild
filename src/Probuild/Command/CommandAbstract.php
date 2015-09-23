@@ -18,6 +18,8 @@ class CommandAbstract extends Command
     protected $composerShell;
     /** @var Shell\Grunt */
     protected $gruntShell;
+    /** @var  Shell */
+    protected $standardShell;
 
     /**
      * @param string $configFile
@@ -56,6 +58,10 @@ class CommandAbstract extends Command
             $this->getGruntShell()->enableTestMode();
         }
 
+        if ($this->getStandardShell()) {
+            $this->getStandardShell()->enableTestMode();
+        }
+
         return $this;
     }
 
@@ -80,6 +86,10 @@ class CommandAbstract extends Command
 
         if ($this->getGruntShell()) {
             $this->getGruntShell()->setOutput($output);
+        }
+
+        if ($this->getStandardShell()) {
+            $this->getStandardShell()->setOutput($output);
         }
 
         return $this;
@@ -185,6 +195,18 @@ class CommandAbstract extends Command
     /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @param \Probuild\Config $config
+     * @param string $command
+     * @return void
+     * @author Cristian Quiroz <cris@qrz.io>
+     */
+    public function runCustomCommand(OutputInterface $output, Config $config, $command)
+    {
+        $this->getStandardShell()->exec($command);
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @param \Probuild\Config $config
      * @return void
      * @author Cristian Quiroz <cris@qrz.io>
      */
@@ -206,7 +228,7 @@ class CommandAbstract extends Command
     /**
      * @param Shell\Directory $directoryShell
      * @author Cristian Quiroz <cris@qcas.co>
-     * @return MakeCommand
+     * @return CommandAbstract
      */
     public function setDirectoryShell($directoryShell)
     {
@@ -227,7 +249,7 @@ class CommandAbstract extends Command
     /**
      * @param Shell\Copy $copyShell
      * @author Cristian Quiroz <cris@qcas.co>
-     * @return MakeCommand
+     * @return CommandAbstract
      */
     public function setCopyShell($copyShell)
     {
@@ -248,7 +270,7 @@ class CommandAbstract extends Command
     /**
      * @param Shell\Composer $composerShell
      * @author Cristian Quiroz <cris@qcas.co>
-     * @return MakeCommand
+     * @return CommandAbstract
      */
     public function setComposerShell($composerShell)
     {
@@ -269,12 +291,33 @@ class CommandAbstract extends Command
     /**
      * @param Shell\Grunt $gruntShell
      * @author Cristian Quiroz <cris@qcas.co>
-     * @return MakeCommand
+     * @return CommandAbstract
      */
     public function setGruntShell($gruntShell)
     {
         $this->gruntShell = $gruntShell;
 
         return $this;
+    }
+
+    /**
+     * @param Shell $standardShell
+     * @return CommandAbstract
+     * @author Cristian Quiroz <cristian.quiroz@ampersandcommerce.com>
+     */
+    public function setStandardShell($standardShell)
+    {
+        $this->standardShell = $standardShell;
+
+        return $this;
+    }
+
+    /**
+     * @return Shell
+     * @author Cristian Quiroz <cristian.quiroz@ampersandcommerce.com>
+     */
+    public function getStandardShell()
+    {
+        return $this->standardShell;
     }
 }

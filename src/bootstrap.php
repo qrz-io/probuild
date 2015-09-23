@@ -15,6 +15,7 @@ $directoryShell = new Shell\Directory();
 $copyShell = new Shell\Copy();
 $composerShell = new Shell\Composer();
 $gruntShell = new Shell\Grunt();
+$standardShell = new Shell\Standard();
 
 //Create and configure Make Command
 $makeCommand = new Command\MakeCommand();
@@ -43,6 +44,10 @@ $gruntCommand
     ->setDirectoryShell($directoryShell)
     ->setGruntShell($gruntShell);
 
+$runCommand = new Command\RunCommand();
+$runCommand
+    ->setStandardShell($standardShell);
+
 //Create Update Command
 $updateCommand = new Command\UpdateCommand();
 
@@ -51,5 +56,6 @@ $application->add($updateCommand);
 $application->add($linkCommand);
 $application->add($composerCommand);
 $application->add($gruntCommand);
+$application->add($runCommand);
 
 return $application;
