@@ -201,7 +201,7 @@ class CommandAbstract extends Command
      */
     public function runCustomCommand(OutputInterface $output, Config $config, $command)
     {
-        $this->getStandardShell()->exec($command);
+        $this->getStandardShell()->run($config->getTargetDirectory(), $command);
     }
 
     /**
@@ -301,7 +301,7 @@ class CommandAbstract extends Command
     }
 
     /**
-     * @param Shell $standardShell
+     * @param Shell\Standard $standardShell
      * @return CommandAbstract
      * @author Cristian Quiroz <cristian.quiroz@ampersandcommerce.com>
      */
@@ -313,7 +313,7 @@ class CommandAbstract extends Command
     }
 
     /**
-     * @return Shell
+     * @return Shell\Standard
      * @author Cristian Quiroz <cristian.quiroz@ampersandcommerce.com>
      */
     public function getStandardShell()
